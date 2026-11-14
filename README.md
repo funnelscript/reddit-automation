@@ -78,7 +78,7 @@ flowchart TD
 ### 1. Build and Test
 
 ```bash
-git clone https://github.com/imMamdouhaboammar/reddit-automation.git
+git clone https://github.com/funnelscript/reddit-automation.git
 cd reddit-automation
 
 # Run full test suite (67/67 tests)
