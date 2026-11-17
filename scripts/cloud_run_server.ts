@@ -1,4 +1,9 @@
 import { spawn } from 'child_process';
+import { z } from 'zod';
+
+const PulsePayloadSchema = z.object({
+  subreddits: z.string().min(1).optional()
+});
 
 const PORT = parseInt(process.env.PORT || '8080', 10);
 
@@ -35,8 +40,11 @@ const server = Bun.serve({
 
     // Cron pulse endpoint invoked periodically by Google Cloud Scheduler
     if (url.pathname === '/cron/pulse' && req.method === 'POST') {
-      const body = await req.json().catch(() => ({}));
-      const subreddits = (body as any).subreddits || 'vibecoding,startups,technology,programming';
+      const raw = await req.json().catch(() => ({}));
+      const parsed = PulsePayloadSchema.safeParse(raw);
+      const subreddits = parsed.success && parsed.data.subreddits
+        ? parsed.data.subreddits
+        : 'vibecoding,startups,technology,programming';
 
       console.log(`[Cloud Run] Pulse triggered for subreddits: ${subreddits}`);
 
@@ -68,4 +76,4 @@ const server = Bun.serve({
   }
 });
 
-console.log(`[reddit-agent] Cloud Run agent listening on port ${PORT}`);
+console.log(`[reddit-agent] Cloud Run agent listening on port ${server.port}`);

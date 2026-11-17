@@ -79,11 +79,11 @@ async function syncChromeCookies(profileName: string = 'Default'): Promise<SyncR
             expires: row.expires_utc ? Math.floor(row.expires_utc / 1000000) - 11644473600 : null
           });
         }
-      } catch (_) {}
+      } catch {}
     }
 
     db.close();
-    try { fs.unlinkSync(tmpPath); } catch (_) {}
+    try { fs.unlinkSync(tmpPath); } catch {}
 
     let username = 'boammarr';
     if (tokenV2) {
@@ -100,7 +100,7 @@ async function syncChromeCookies(profileName: string = 'Default'): Promise<SyncR
             username = data.name;
           }
         }
-      } catch (_) {
+      } catch {
         // Fallback to boammarr if network times out
       }
     }
