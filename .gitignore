@@ -2,7 +2,7 @@
 node_modules/
 .bun/
 
-# Build artifacts
+# Build artifacts & compilation caches
 dist/
 build/
 target/
@@ -13,6 +13,8 @@ target/
 .env
 .env.*
 !.env.example
+*.local
+.env*.local
 *.pem
 *.key
 *.cert
@@ -22,11 +24,27 @@ target/
 id_rsa*
 id_ed25519*
 tokens.json
+credentials.json
+client_secret*.json
+keychain_dump*.json
+cookies.json
+browser_profiles/
+env-vault/
+.vault/
+secrets/
+
+# Databases & Runtime State
 *.db
+*.db-shm
+*.db-wal
+*.db-journal
 *.sqlite
 *.sqlite3
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite-journal
 state.db
-browser_profiles/
+cookies_*.db
 
 # Logs & Debug
 logs/
@@ -37,7 +55,7 @@ npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
-# Test Coverage & Cache
+# Test Coverage, Reports & Cache
 coverage/
 .nyc_output/
 .cache/
@@ -48,6 +66,23 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
+test-results/
+playwright-report/
+blob-report/
+junit.xml
+
+# Local Agent & Harness Artifacts (Prevent scratch/fable/planning leakage)
+.fable/
+.planning/
+.agents/scratch/
+.gemini/
+.claude/
+.superpowers/
+.codex/
+.opencode/
+.pi/
+.roo/
+.windsurf/
 
 # OS metadata & Editor files
 .DS_Store
@@ -55,11 +90,24 @@ venv/
 ._*
 .Spotlight-V100
 .Trashes
+.AppleDouble
+.LSOverride
+.DocumentRevisions-V100
 Thumbs.db
 ehthumbs.db
 .idea/
 .vscode/
+.cursor/
+.zed/
+.fleet/
 *.swp
 *.swo
 *~
-.cursor/
+*.bak
+*.tmp
+*.temp
+*.old
+*.orig
+*.rej
+*.sublime-project
+*.sublime-workspace
